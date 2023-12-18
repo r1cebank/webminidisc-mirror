@@ -17,4 +17,4 @@ jobs:
           source_repo: 'asivery/webminidisc'
           source_branch: 'master'
           destination_branch: 'mirror'
-          github_token: ${{secrets.GITHUB_TOKEN}}
+          github_token: ${{ secrets.PAT }}

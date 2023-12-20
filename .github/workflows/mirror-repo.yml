@@ -1,6 +1,6 @@
 on:
   schedule:
-    - cron: '0 * * * *'
+    - cron: '0 1 * * *'
   workflow_dispatch:
 
 jobs:
@@ -18,3 +18,9 @@ jobs:
           source_branch: 'master'
           destination_branch: 'mirror'
           github_token: ${{ secrets.PAT }}
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag webminidisc:$(date +%s)

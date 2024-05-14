@@ -24,9 +24,14 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
-      - run: npm ci --legacy-peer-deps
-      - run: CI=false npm run build --if-present
+          node-version: '18.x'
+      - name: Build no-ga Release 🔧
+        run: npm run build
+        env:
+          CI: false # Do not treat warnings as errors
+          PUBLIC_URL: ./
+          REACT_APP_NO_GA_RELEASE: true # disables service workers and GA
+          GENERATE_SOURCEMAP: false
       - name: Log in to Docker Hub
         uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
         with:
@@ -41,7 +46,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
         with:
-          context: .
+          context: ./
           file: ./Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}

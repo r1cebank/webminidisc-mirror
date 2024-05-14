@@ -25,12 +25,13 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
-      - name: Build no-ga Release 🔧
-        run: npm run build
+      - name: Build Release 🔧
+        run: |
+          npm install
+          npm run build
         env:
           CI: false # Do not treat warnings as errors
           PUBLIC_URL: ./
-          REACT_APP_NO_GA_RELEASE: true # disables service workers and GA
           GENERATE_SOURCEMAP: false
       - name: Log in to Docker Hub
         uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
